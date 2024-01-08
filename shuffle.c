@@ -44,6 +44,7 @@ int getlen( int *array ){
 void shuffle( int *array ){
   srand(time(NULL));
   int *tmp = array;
+  int *arr = NULL;
   int len = getlen(tmp);
 
   if( !tmp )
@@ -53,14 +54,15 @@ void shuffle( int *array ){
 
   while(i < MAXLEN){
     int r = rand() % 8;
-    printf("The random # is %d\n", r);
-    printf("%d is in  %p and %d is in %p\n",tmp[i],&(tmp[i]),tmp[r], &(tmp[r]));
+    //    printf("The random # is %d\n", r);
+    //printf("%d is in  %p and %d is in %p\n",tmp[i],&(tmp[i]),tmp[r], &(tmp[r]));
     swap(&(tmp[i]), &(tmp[r]));
+    arr[i] = tmp[i];
+
     i++;
   }
+  printarray(arr);
 
-  //puts("########## POST SHUFFLE ################\n");
-  //printarray(tmp);
 }
 
 
@@ -69,21 +71,23 @@ int main(){
   int *tmp = malloc(sizeof(int) * MAXLEN);
 
   printf("The address of tmp is %p\n", tmp);
-  //  printf("The address of array is %p\n", array);
-  //array = tmp;
-
-  //  printf("\tThe address of array is %p\n", array);
-  // printarray(array);
 
   for(int i = 0; i < MAXLEN; i++){
     tmp[i] = i+1;
   }
+  //puts("########## PRE-SHUFFLE ##############\n");
 
-  printarray(tmp);
+  //printarray(tmp);
   
   shuffle(tmp);
 
-  printarray(tmp);
+  //puts("############### POST SHUFFLE #############\n");
+  
+  /*for(int i = 0; i < MAXLEN;i++,tmp++){
+    printf("At %d is a %d\n", i, *tmp);
+    }*/
+
+  //  printarray(tmp);
 
   free(tmp);
   
