@@ -39,9 +39,11 @@ void printarray( int *array ){
 }
 
 void swap( int *a, int *b ){
-  int *t = a;
-  a = b;
-  b = t;
+  printf("a is %d and b is %d\n", *a, *b);
+  int *t = b;
+  b = a;
+  a = t;
+  printf("Now a is %d and b is %d\n", *a, *b);
 }
 
 void shuffle( int *array ){
@@ -49,10 +51,16 @@ void shuffle( int *array ){
   int buf[] = {'\0'};
   int r = getrand(MIN, MAX);
 
-  printf("Array[%d] is %d\n", r, array[r]);
-  while(count < MAXLEN-1 && count != r){
-    printf("Count is now %d\n", count);
-    
+  //printf("Array[%d] is %d\n", r, array[r]);
+  while(count < MAXLEN-1){
+    array[count] = array[getrand(MIN,MAX)];
+    buf[count] = array[count];
+    for(int i = 0; i < count;i++){
+      if(buf[i] == array[count]){
+	printf("Match at index %d with number %d\n", i, buf[i]);
+	buf[i] = array[getrand(MIN,MAX)];
+      }
+    }
     count++;
   }
 }
@@ -66,6 +74,8 @@ int main(){
   printarray(array);
 
   shuffle(array);
+  
+  printarray(array);
   
   free(array);
   
