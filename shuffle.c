@@ -29,6 +29,17 @@ void *mkarray(){
   return array;
 }
 
+void swap( int a, int  b ){
+  int *t;
+  int *x = malloc(sizeof(a));
+  x = &a;
+  int *y = malloc(sizeof(b));
+  y = &b;
+  t = b;
+  *y = *x;
+  *x = a
+}
+
 void printarray( int *array ){
   int i = 0;
   int *tmp = array;
@@ -37,43 +48,27 @@ void printarray( int *array ){
     i++;
   }
 }
-
-void swap( int *a, int *b ){
-  printf("a is %d and b is %d\n", *a, *b);
-  int *t = b;
-  b = a;
-  a = t;
-  printf("Now a is %d and b is %d\n", *a, *b);
-}
-
+                                                                                                                                
 void shuffle( int *array ){
-  int count = 0;
-  int buf[] = {'\0'};
-  int r = getrand(MIN, MAX);
-
-  //printf("Array[%d] is %d\n", r, array[r]);
-  while(count < MAXLEN-1){
-    array[count] = array[getrand(MIN,MAX)];
-    buf[count] = array[count];
-    for(int i = 0; i < count;i++){
-      if(buf[i] == array[count]){
-	printf("Match at index %d with number %d\n", i, buf[i]);
-	buf[i] = array[getrand(MIN,MAX)];
+  srand(time(NULL));  
+  for(int i = MAXLEN-2; i > 0;i--){
+    int r = rand()% (i + 1);
+    int buf = array[i];
+    array[i] = array[r];
+    array[r] = buf;
       }
-    }
-    count++;
   }
-}
+
 
 int main(){
-  
-  srand(time(NULL));
 
   int *array = mkarray();
   
   printarray(array);
 
   shuffle(array);
+
+  puts("##################SHUFFLED#####################");
   
   printarray(array);
   
